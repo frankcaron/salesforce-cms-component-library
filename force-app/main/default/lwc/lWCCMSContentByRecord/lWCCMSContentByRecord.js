@@ -1,4 +1,4 @@
-import { LightningElement, track, wire, api } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import getCMSContentForRecordTopics from '@salesforce/apex/ManagedContentController.getCMSContentForRecordTopics';
 
 export default class lwcCMSContentByRecord extends LightningElement {
@@ -10,6 +10,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     //Params for content
     content;
     contentArray;
+    items;
     error;
 
     //Fetch CMS content
@@ -20,15 +21,16 @@ export default class lwcCMSContentByRecord extends LightningElement {
             //Grab data
             this.contentArray = data;
             this.content = JSON.stringify(this.contentArray);
+            this.items = this.contentArray.items;
             
             //Logs
-            console.log("Grabbed content");
+            console.log("CMS Component Debug || Fetched content successfully");
+            console.log("CMS Component Debug || Record Id: " + this.recordId);
+            console.log("CMS Component Debug || Content Type: " + this.contentType);
+            console.log("CMS Component Debug || Content Array");
             console.log(this.contentArray);
-            console.log(this.content);
 
         } else if (error) {
-            //Logs
-            console.log("Failed to grab content");
 
             //Grab error
             this.error = 'Unknown error';
@@ -38,6 +40,11 @@ export default class lwcCMSContentByRecord extends LightningElement {
             } else if (typeof error.body.message === 'string') {
                 this.error = error.body.message;
             }
+
+            //Logs
+            console.log("CMS Component Debug || Fetch failed");
+            console.log("CMS Component Debug || Error" + error);
+
         }
     }
 }

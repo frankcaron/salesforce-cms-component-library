@@ -1,14 +1,22 @@
 <template>
-    <div>
-        <h2>Properties</h2>
-        <p>Record: {recordId}</p>
-        <p>Content Type: {contentType}</p>
-    </div>
-
     <template if:true={content}>
-        <div>
-            <h2>Content</h2>
-            <p>{content}</p>
+        <div class="cms-content-block">
+            <h2>Pretty Content</h2>
+            <template if:true={items}>
+                <template for:each={items} for:item="item">
+                    <lightning-card key={item.managedContentId} title={item.contentNodes.title.value}>
+                        <template if:true={item.contentNodes.bannerImage}>
+                            <img key={item.managedContentId} src={item.contentNodes.bannerImage.url} />
+                        </template>
+                        <template if:true={item.contentNodes.body}>
+                            <lightning-formatted-rich-text key={item.managedContentId} value={item.contentNodes.body.value}></lightning-formatted-rich-text>
+                        </template>
+                        <template for:each={item.associations.topics} for:item="topic">
+                            <p key={topic.id}>{topic.name}</p>
+                        </template>
+                    </lightning-card>
+                </template>
+            </template>
         </div>
     </template>
     <template if:true={error}>

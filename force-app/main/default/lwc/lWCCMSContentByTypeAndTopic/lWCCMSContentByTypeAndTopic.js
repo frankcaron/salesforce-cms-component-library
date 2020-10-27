@@ -9,6 +9,7 @@ export default class lwcCMSContentByTypeAndTopic extends LightningElement {
 
     //Params for content
     content;
+    items;
     contentArray;
     error;
 
@@ -20,6 +21,7 @@ export default class lwcCMSContentByTypeAndTopic extends LightningElement {
             //Grab data
             this.contentArray = data;
             this.content = JSON.stringify(this.contentArray);
+            this.items = this.contentArray.items;
             
             //Logs
             console.log("Grabbed content");

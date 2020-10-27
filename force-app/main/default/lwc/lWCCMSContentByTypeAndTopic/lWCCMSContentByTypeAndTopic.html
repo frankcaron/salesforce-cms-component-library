@@ -1,14 +1,17 @@
 <template>
-    <div>
+    <div class="cms-content-block">
         <h2>Properties</h2>
         <p>Record: {topicId}</p>
         <p>Content Type: {contentType}</p>
     </div>
 
     <template if:true={content}>
-        <div>
-            <h2>Content</h2>
+        <div class="cms-content-block">
+            <h2>Raw Content</h2>
             <p>{content}</p>
+        </div>
+        <div class="cms-content-block">
+            <h2>Pretty Content</h2>
         </div>
     </template>
     <template if:true={error}>
