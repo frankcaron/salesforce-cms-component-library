@@ -8,4 +8,10 @@
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="topicId" label="Managed Topic Id" type="String" description="" required="true"/>
+            <property name="contentType" label="Managed Content Type" type="String" description="" default="news"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

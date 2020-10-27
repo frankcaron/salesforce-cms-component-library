@@ -8,4 +8,9 @@
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" label="Record Id" type="String" description="" required="true"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

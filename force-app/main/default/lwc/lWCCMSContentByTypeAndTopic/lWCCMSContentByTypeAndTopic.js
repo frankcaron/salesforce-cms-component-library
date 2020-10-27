@@ -1,7 +1,11 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 import getCMSContentForTopic from '@salesforce/apex/ManagedContentController.getCMSContentForTopic';
 
 export default class lwcCMSContentByTypeAndTopic extends LightningElement {
+    
+    // Params from config
+    @api topicId;
+    @api contentType;
 
 }
 
