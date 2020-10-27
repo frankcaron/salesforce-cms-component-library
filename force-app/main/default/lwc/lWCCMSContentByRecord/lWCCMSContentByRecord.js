@@ -1,5 +1,5 @@
 import { LightningElement } from 'lwc';
-import getCMSContentForRecordTopics from '@salesforce/apex/cmsutils.ManagedContentController';
+import getCMSContentForRecordTopics from '@salesforce/apex/ManagedContentController.getCMSContentForRecordTopics';
 
 export default class lwcCMSContentByRecord extends LightningElement {
 
