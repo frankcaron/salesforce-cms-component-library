@@ -1,3 +1,11 @@
 <template>
     <p>Hello world! I'm dumping detail here momentarily. Record: {recordId}</p>
+
+    <template if:true={content}>
+        <p>{content}</p>
+    </template>
+    <template if:true={error}>
+        <p>{error}</p>
+    </template>
+
 </template>

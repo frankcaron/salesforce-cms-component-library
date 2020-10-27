@@ -5,6 +5,24 @@ export default class lwcCMSContentByRecord extends LightningElement {
     
     // Params from config
     @api recordId;
+    @api contentType;
+
+    //Params for content
+    content;
+    error;
+
+    //Fetch CMS content
+    
+    @wire(getCMSContentForRecordTopics, { recordId: '$recordId', managedContentType: '$contentType' })
+    wiredContent({ error, data }) {
+        if (data) {
+            this.content = JSON.stringify(data.JSON);
+        } else if (error) {
+            this.error = error;
+            this.content = undefined;
+        }
+    }
+
 }
 
 /* 

@@ -10,7 +10,8 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
-            <property name="recordId" label="Record Id" type="String" description="" required="true"/>
+            <property name="recordId" label="Record Id" type="String" description="The Record ID for loading relevant content based on the component's embdded context." required="true" default="{!recordId}" />
+            <property name="contentType" label="Managed Content Type" type="String" description="The type of content to fetch." default="news" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

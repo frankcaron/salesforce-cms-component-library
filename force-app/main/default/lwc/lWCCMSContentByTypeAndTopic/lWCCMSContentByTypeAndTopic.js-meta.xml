@@ -10,7 +10,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
-            <property name="topicId" label="Managed Topic Id" type="String" description="" required="true"/>
+            <property name="topicId" label="Managed Topic Id" type="String" description="" required="true" default="{!topicId}" />
             <property name="contentType" label="Managed Content Type" type="String" description="" default="news"/>
         </targetConfig>
     </targetConfigs>
