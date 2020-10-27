@@ -27,8 +27,8 @@ export default class lwcCMSContentByRecord extends LightningElement {
             console.log("CMS Component Debug || Fetched content successfully");
             console.log("CMS Component Debug || Record Id: " + this.recordId);
             console.log("CMS Component Debug || Content Type: " + this.contentType);
-            console.log("CMS Component Debug || Content Array");
-            console.log(this.contentArray);
+            console.log("CMS Component Debug || Content Array: ");
+            console.log(this.content);
 
         } else if (error) {
 
