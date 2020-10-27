@@ -7,13 +7,4 @@
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
     </targets>
-    <targetConfigs>
-        <targetConfig targets="lightningCommunity__Default">
-            <property name="string" type="String" default="jsMetaValue"></property>
-            <property name="boolean" type="Boolean" default="true"></property>
-            <property name="integer" type="Integer" default="5"></property>
-            <property name="picklist" type="String" default="value3" datasource="value1,value2,value3" />
-            <property name="backgroundColor" type="Color" default="#ff00ff"></property>
-        </targetConfig>
-    </targetConfigs>
 </LightningComponentBundle>

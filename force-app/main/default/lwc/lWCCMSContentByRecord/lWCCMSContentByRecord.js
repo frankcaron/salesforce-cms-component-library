@@ -1,3 +1,3 @@
 import { LightningElement } from 'lwc';
 
-export default class LWCCMSContentByRecord extends LightningElement {}
+export default class lwcCMSContentByRecord extends LightningElement {}
