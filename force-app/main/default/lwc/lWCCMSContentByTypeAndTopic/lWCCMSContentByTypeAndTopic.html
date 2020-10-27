@@ -1,3 +1,20 @@
 <template>
-    <p>Hello world! I'm dumping detail here momentarily. Topic: {topicId}</p>
+    <div>
+        <h2>Properties</h2>
+        <p>Record: {topicId}</p>
+        <p>Content Type: {contentType}</p>
+    </div>
+
+    <template if:true={content}>
+        <div>
+            <h2>Content</h2>
+            <p>{content}</p>
+        </div>
+    </template>
+    <template if:true={error}>
+        <div>
+            <p>{error}</p>
+        </div>
+    </template>
+
 </template>

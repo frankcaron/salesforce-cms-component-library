@@ -4,7 +4,7 @@ public with sharing class ManagedContentController {
     /**
      * Returns all configured channels to which this user has access.
      */
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static ConnectApi.ManagedContentChannelCollection getAllAvailableContentChannels() {
         return ConnectApi.ManagedContent.getAllDeliveryChannels(0, 250); // TODO: Make this paginate.
     }
@@ -13,7 +13,7 @@ public with sharing class ManagedContentController {
     /**
      * Returns all content for a particular topic in the current community.
      */
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopic(String topicId, String managedContentType) {
         String communityId = Network.getNetworkId();
         
@@ -26,7 +26,7 @@ public with sharing class ManagedContentController {
     /**
      * Returns all CMS content for a set of topics in the current community.
      */
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopics(List<String> topicIds, String managedContentType) {
         String curLanguage = UserInfo.getLanguage(); // TODO: how does this work for the guest user?
         String communityId = Network.getNetworkId();
@@ -47,7 +47,7 @@ public with sharing class ManagedContentController {
     /**
      * Returns CMS content related to a record by virtue of topic-for-objects associations.
      */
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static ConnectApi.ManagedContentVersionCollection getCMSContentForRecordTopics(String recordId, String managedContentType) {
         // 1. Retrieve network-scoped topics related to the record.
         String networkId = Network.getNetworkId();

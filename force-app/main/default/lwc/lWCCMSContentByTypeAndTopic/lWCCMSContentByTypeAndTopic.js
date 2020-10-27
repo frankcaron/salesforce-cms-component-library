@@ -7,38 +7,38 @@ export default class lwcCMSContentByTypeAndTopic extends LightningElement {
     @api topicId;
     @api contentType;
 
-}
+    //Params for content
+    content;
+    contentArray;
+    error;
 
-/* ({
-	getContentForTopic : function(component, event, helper) {
-        var action = component.get("c.getCMSContentForTopic");
-        action.setParams({topicId : component.get("v.topicId"), managedContentType : component.get("v.managedContentType")});
-        
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                var myContent = response.getReturnValue();
-                component.set("v.CMSContent", myContent);
-                
-                // set values to help debug
-                console.log("CMS Content: " + myContent);
-                //alert(JSON.stringify(myContent));
-				component.set("v.stringCMSContent", JSON.stringify(response.getReturnValue()));
-            } else if (state === "INCOMPLETE") {
-                console.log("State incomplete.");
-            } else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " + errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
+    //Fetch CMS content
+    @wire(getCMSContentForTopic, { topicId: '$topicId', managedContentType: '$contentType' })
+    wiredContent({ error, data }) {
+        if (data) {
+
+            //Grab data
+            this.contentArray = data;
+            this.content = JSON.stringify(this.contentArray);
+            
+            //Logs
+            console.log("Grabbed content");
+            console.log(this.contentArray);
+            console.log(this.content);
+
+        } else if (error) {
+            //Logs
+            console.log("Failed to grab content");
+
+            //Grab error
+            this.error = 'Unknown error';
+            this.content = undefined;
+            if (Array.isArray(error.body)) {
+                this.error = error.body.map(e => e.message).join(', ');
+            } else if (typeof error.body.message === 'string') {
+                this.error = error.body.message;
             }
-        });
-        
-        $A.enqueueAction(action);
-	}
-})
-*/
+        }
+    }
+
+}
