@@ -7,6 +7,9 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @api recordId;
     @api contentType;
     @api inBuilder;
+    @api titleAttribute;
+    @api bodyAttribute;
+    @api imageAttribute;
 
     //Params for content
     content;
@@ -29,7 +32,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
             //HTML encode the body where necessary
             for (let item of this.contentArray.items) {
                 
-                //Temp var
+                //Clone the original item object json
                 let itemToAdd = JSON.parse(JSON.stringify(item));
                 
                 //Logs
