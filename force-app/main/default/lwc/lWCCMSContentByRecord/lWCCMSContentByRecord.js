@@ -6,6 +6,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     // Params from config
     @api recordId;
     @api contentType;
+    @api inBuilder;
 
     //Params for content
     content;
@@ -21,7 +22,38 @@ export default class lwcCMSContentByRecord extends LightningElement {
             //Grab data
             this.contentArray = data;
             this.content = JSON.stringify(this.contentArray);
-            this.items = this.contentArray.items;
+
+            //Temporarily hold items
+            let itemsToTweak = [];
+
+            //HTML encode the body where necessary
+            for (let item of this.contentArray.items) {
+                
+                //Temp var
+                let itemToAdd = JSON.parse(JSON.stringify(item));
+                
+                //Logs
+                console.log("CMS Component Debug || Item to add");
+                console.log(itemToAdd);
+
+                //Tweak the specific values necessary to render properly
+                if (itemToAdd.contentNodes.body) {
+                    console.log("CMS Component Debug || HTML: " + this.htmlDecode(itemToAdd.contentNodes.body.value));
+                    itemToAdd.contentNodes.body.value = this.htmlDecode(itemToAdd.contentNodes.body.value);
+                }
+                if (itemToAdd.contentNodes.bannerImage.url) {
+                    itemToAdd.contentNodes.bannerImage.url = '/sfsites/c' + itemToAdd.contentNodes.bannerImage.url;
+                }
+
+                //Add to array
+                itemsToTweak.push(itemToAdd);
+            }
+
+            //Assign items
+            this.items = itemsToTweak;
+
+            //Todo
+            //Refactor items array to HTML encode the
             
             //Logs
             console.log("CMS Component Debug || Fetched content successfully");
@@ -46,5 +78,11 @@ export default class lwcCMSContentByRecord extends LightningElement {
             console.log("CMS Component Debug || Error" + error);
 
         }
+    }
+
+    //Private function to decode HTML
+    htmlDecode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
     }
 }

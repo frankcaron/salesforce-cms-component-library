@@ -4,11 +4,10 @@ div.cms-content-block {
 
 /* CMS Card Image */
 div.cms-card-image img {
-    margin: 20px;
     border: 1px solid #000;
 }
 div.cms-card-image {
-    width: 100%;
+    max-width: calc(100% - 40px);
     margin-left: auto;
     margin-right: auto;
     display: block;
