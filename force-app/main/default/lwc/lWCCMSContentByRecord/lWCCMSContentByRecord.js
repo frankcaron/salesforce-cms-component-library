@@ -10,6 +10,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @api titleAttribute;
     @api bodyAttribute;
     @api imageAttribute;
+    @api linkAttribute;
     @api contentDisplayStyle;
 
     //Params for content
@@ -38,6 +39,16 @@ export default class lwcCMSContentByRecord extends LightningElement {
 
             //Temporarily hold items
             let itemsToTweak = [];
+
+            /* TODO
+            - Finish the visualization of the gall
+            - Content item click-through URL
+            - Alternative Link
+            - Date
+            - Flag
+            - Use excerpt instead of the body (by default)
+            - TBD
+            */
 
             //HTML encode the body where necessary
             for (let item of this.contentArray.items) {
@@ -102,23 +113,23 @@ export default class lwcCMSContentByRecord extends LightningElement {
     //Private function to set up scrolling for the gallery view
     slideRight() {
         let currentAmount = this.template.querySelector('.cms-gallery-block').scrollLeft;
-        let moveToVal = currentAmount + 200;
-        console.log("CMS Component Debug || Scroll Amount: " + currentAmount);
+        let cardWidth = this.template.querySelector('.cms-gallery-block').scrollWidth;
+        let cardCount = this.items.length;
+        let moveToVal = currentAmount + (cardWidth / cardCount);
+        console.log("CMS Component Debug || Looking at moving across " + cardCount + " cards with a total width of " + cardWidth) ;
         this.slide(moveToVal);
     }
     slideLeft() {
         let currentAmount = this.template.querySelector('.cms-gallery-block').scrollLeft;
-        let moveToVal = currentAmount - 200;
-        console.log("CMS Component Debug || Scroll Amount: " + currentAmount);
+        let cardWidth = this.template.querySelector('.cms-gallery-block').scrollWidth;
+        let cardCount = this.items.length;
+        let moveToVal = currentAmount - (cardWidth / cardCount);
+        console.log("CMS Component Debug || Looking at moving across " + cardCount + " cards with a total width of " + cardWidth) ;
         this.slide(moveToVal);
         
     }
     slide(val) {
         console.log("CMS Component Debug || Scrolling to: " + val);
-        this.template.querySelector('.cms-gallery-block').scrollTo({
-            left: val,
-            top: 0,
-            behavior: "smooth"
-        });
+        this.template.querySelector('.cms-gallery-block').scrollLeft = val;
     }
 }
