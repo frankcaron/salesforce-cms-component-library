@@ -64,14 +64,18 @@ div.cms-gallery-block div.cms-card:last-child {
 
 div.cms-gallery-controls {
     text-align: center;
+    margin-top: 10px;
 }
 
 div.cms-gallery-controls button.slideRight, div.cms-gallery-controls button.slideLeft {
     margin-left: 10px;
     margin-right: 10px;
-    background-color: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #BBB;
     border: none;
+    border-radius: 10px;
     font-size: 20px;
     font-weight: bolder;
-    color: #888;
+    color: #FFF;
 }
