@@ -8,7 +8,7 @@ div.cms-content-block {
 }
 
 /* CMS Card Body */
-div.cms-card {
+div.cms-content-block div.cms-card {
     margin-bottom: 20px;
 }
 p.cms-card-body {
@@ -44,6 +44,12 @@ div.cms-gallery-block {
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+div.cms-gallery-block::-webkit-scrollbar {
+    display: none;
 }
 
 div.cms-gallery-block div.cms-card {
@@ -54,4 +60,18 @@ div.cms-gallery-block div.cms-card {
 
 div.cms-gallery-block div.cms-card:last-child {
     margin-right: 0px;
+}
+
+div.cms-gallery-controls {
+    text-align: center;
+}
+
+div.cms-gallery-controls button.slideRight, div.cms-gallery-controls button.slideLeft {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #888;
 }

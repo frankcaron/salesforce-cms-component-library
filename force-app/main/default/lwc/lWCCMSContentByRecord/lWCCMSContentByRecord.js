@@ -98,4 +98,22 @@ export default class lwcCMSContentByRecord extends LightningElement {
         var doc = new DOMParser().parseFromString(input, "text/html");
         return doc.documentElement.textContent;
     }
+
+    //Private function to set up scrolling for the gallery view
+    slideRight() {
+        let currentAmount = this.template.querySelector('.cms-gallery-block').scrollLeft;
+        console.log("CMS Component Debug || Scroll Amount" + currentAmount);
+        this.template.querySelector('.cms-gallery-block').scrollTo({
+            left: calc(currentAmount + 200),
+            behavior: 'smooth'
+        });
+    }
+    slideLeft() {
+        let currentAmount = this.template.querySelector('.cms-gallery-block').scrollLeft;
+        console.log("CMS Component Debug || Scroll Amount" + currentAmount);
+        this.template.querySelector('.cms-gallery-block').scrollTo({
+            left: calc(currentAmount - 200),
+            behavior: 'smooth'
+        });
+    }
 }
