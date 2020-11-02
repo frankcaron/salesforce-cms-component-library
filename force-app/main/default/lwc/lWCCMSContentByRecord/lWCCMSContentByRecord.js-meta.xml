@@ -15,6 +15,7 @@
             <property name="titleAttribute" label="CMS Title Field" type="String" description="The CMS Content attribute for the header text." required="true" default="title.value" />
             <property name="bodyAttribute" label="CMS Body Field" type="String" description="The CMS Content attribute for the body text." required="true" default="body.value" />
             <property name="imageAttribute" label="CMS Image Field" type="String" description="The CMS Content attribute for the image URL." required="true" default="bannerImage.url" />
+            <property name="contentDisplayStyle" label="Visual Style" type="String" description="The display style for CMS content items." required="true" default="Cards" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

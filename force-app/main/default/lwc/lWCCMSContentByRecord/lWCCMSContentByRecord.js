@@ -10,17 +10,27 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @api titleAttribute;
     @api bodyAttribute;
     @api imageAttribute;
+    @api contentDisplayStyle;
 
     //Params for content
     content;
     contentArray;
     items;
     error;
+    isCardDisplayStyle = false;
+    isGalleryDisplayStyle = false;
 
     //Fetch CMS content
     @wire(getCMSContentForRecordTopics, { recordId: '$recordId', managedContentType: '$contentType' })
     wiredContent({ error, data }) {
         if (data) {
+
+            //Determine display style
+            if (this.contentDisplayStyle == 'Cards') {
+                this.isCardDisplayStyle = true;
+            } else {
+                this.isGalleryDisplayStyle = true;
+            }
 
             //Grab data
             this.contentArray = data;
