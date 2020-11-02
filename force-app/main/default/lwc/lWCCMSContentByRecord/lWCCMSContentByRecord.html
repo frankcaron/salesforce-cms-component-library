@@ -9,7 +9,7 @@
                             <lightning-card title={item.contentNodes.title.value}>
                                 <template if:true={item.contentNodes.bannerImage}>
                                     <div class="cms-card-image">
-                                        <img key={item.managedContentId} src={item.contentNodes.bannerImage.url} />
+                                        <a href={item.contentUrlName}><img key={item.managedContentId} src={item.contentNodes.bannerImage.url} /></a>
                                     </div>
                                 </template>
                                 <template if:true={item.contentNodes.excerpt}>
@@ -37,7 +37,7 @@
                             <lightning-card title={item.contentNodes.title.value}>
                                 <template if:true={item.contentNodes.bannerImage}>
                                     <div class="cms-card-image">
-                                        <img key={item.managedContentId} src={item.contentNodes.bannerImage.url} />
+                                        <a href={item.contentUrlName}><img key={item.managedContentId} src={item.contentNodes.bannerImage.url} /></a>
                                     </div>
                                 </template>
                                 <template if:true={item.contentNodes.excerpt}>
