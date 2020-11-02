@@ -1,3 +1,11 @@
+/* TODO
+- Content item click-through URL
+- Alternative Link
+- Date
+- Flag
+- Use excerpt instead of the body (by default)
+*/
+
 import { LightningElement, wire, api } from 'lwc';
 import getCMSContentForRecordTopics from '@salesforce/apex/ManagedContentController.getCMSContentForRecordTopics';
 
@@ -40,16 +48,6 @@ export default class lwcCMSContentByRecord extends LightningElement {
             //Temporarily hold items
             let itemsToTweak = [];
 
-            /* TODO
-            - Finish the visualization of the gall
-            - Content item click-through URL
-            - Alternative Link
-            - Date
-            - Flag
-            - Use excerpt instead of the body (by default)
-            - TBD
-            */
-
             //HTML encode the body where necessary
             for (let item of this.contentArray.items) {
                 
@@ -61,9 +59,9 @@ export default class lwcCMSContentByRecord extends LightningElement {
                 console.log(itemToAdd);
 
                 //Tweak the specific values necessary to render properly
-                if (itemToAdd.contentNodes.body) {
-                    console.log("CMS Component Debug || HTML: " + this.htmlDecode(itemToAdd.contentNodes.body.value));
-                    itemToAdd.contentNodes.body.value = this.htmlDecode(itemToAdd.contentNodes.body.value);
+                if (itemToAdd.contentNodes.excerpt) {
+                    console.log("CMS Component Debug || HTML: " + this.htmlDecode(itemToAdd.contentNodes.excerpt.value));
+                    itemToAdd.contentNodes.excerpt.value = this.htmlDecode(itemToAdd.contentNodes.excerpt.value);
                 }
                 if (itemToAdd.contentNodes.bannerImage.url) {
                     itemToAdd.contentNodes.bannerImage.url = '/sfsites/c' + itemToAdd.contentNodes.bannerImage.url;

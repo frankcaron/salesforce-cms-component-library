@@ -55,7 +55,7 @@ div.cms-gallery-block::-webkit-scrollbar {
 div.cms-gallery-block div.cms-card {
     flex: 0 0 auto;
     max-width: 100%;
-    margin-right: 20px;
+    margin-right: 0px;
 }
 
 div.cms-gallery-block div.cms-card:last-child {

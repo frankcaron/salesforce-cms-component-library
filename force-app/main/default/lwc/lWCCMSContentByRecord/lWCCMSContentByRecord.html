@@ -12,9 +12,9 @@
                                         <img key={item.managedContentId} src={item.contentNodes.bannerImage.url} />
                                     </div>
                                 </template>
-                                <template if:true={item.contentNodes.body}>
+                                <template if:true={item.contentNodes.excerpt}>
                                     <p class="cms-card-body">
-                                        <lightning-formatted-rich-text key={item.managedContentId} value={item.contentNodes.body.value}></lightning-formatted-rich-text>
+                                        <lightning-formatted-rich-text key={item.managedContentId} value={item.contentNodes.excerpt.value}></lightning-formatted-rich-text>
                                     </p>
                                 </template>
                                     <div class="cms-card-footer">
@@ -40,9 +40,9 @@
                                         <img key={item.managedContentId} src={item.contentNodes.bannerImage.url} />
                                     </div>
                                 </template>
-                                <template if:true={item.contentNodes.body}>
+                                <template if:true={item.contentNodes.excerpt}>
                                     <p class="cms-card-body">
-                                        <lightning-formatted-rich-text key={item.managedContentId} value={item.contentNodes.body.value}></lightning-formatted-rich-text>
+                                        <lightning-formatted-rich-text key={item.managedContentId} value={item.contentNodes.excerpt.value}></lightning-formatted-rich-text>
                                     </p>
                                 </template>
                                     <div class="cms-card-footer">
