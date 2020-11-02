@@ -30,7 +30,32 @@
             </div>
         </template>
         <template if:true={isGalleryDisplayStyle}>
-            <p>I mean, it does technically work tho.</p>
+            <div class="cms-gallery-block">
+                <template if:true={items}>
+                    <template for:each={items} for:item="item">
+                        <div class="cms-card" key={item.managedContentId}>
+                            <lightning-card title={item.contentNodes.title.value}>
+                                <template if:true={item.contentNodes.bannerImage}>
+                                    <div class="cms-card-image">
+                                        <img key={item.managedContentId} src={item.contentNodes.bannerImage.url} />
+                                    </div>
+                                </template>
+                                <template if:true={item.contentNodes.body}>
+                                    <p class="cms-card-body">
+                                        <lightning-formatted-rich-text key={item.managedContentId} value={item.contentNodes.body.value}></lightning-formatted-rich-text>
+                                    </p>
+                                </template>
+                                    <div class="cms-card-footer">
+                                        <p>Topics:</p>
+                                        <template for:each={item.associations.topics} for:item="topic">
+                                            <p key={topic.id}>{topic.name}</p>
+                                        </template>
+                                    </div>
+                            </lightning-card>
+                        </div>
+                    </template>
+                </template>
+            </div>
         </template>
     </template>
     <template if:true={error}>
