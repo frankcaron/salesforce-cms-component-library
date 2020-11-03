@@ -172,5 +172,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     slide(val) {
         console.log("CMS Component Debug || Scrolling to: " + val);
         this.template.querySelector('.cms-gallery-block').scrollLeft = val;
+        //this.template.querySelector('.cms-gallery-block').animate({ scrollLeft: val }, 1000)
+        //this.template.querySelector('.cms-gallery-block').scrollTo({ top: 0, left: val, behavior: 'smooth'});
     }
 }
