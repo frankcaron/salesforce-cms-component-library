@@ -11,6 +11,11 @@ div.cms-content-block {
 div.cms-content-block div.cms-card {
     margin-bottom: 20px;
 }
+
+p.cms-card-body-hidden {
+    display: none !important;
+}
+
 p.cms-card-body {
     margin: 20px;
 }

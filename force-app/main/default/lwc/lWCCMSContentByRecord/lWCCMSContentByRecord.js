@@ -25,6 +25,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     content;
     contentArray;
     items;
+    attributesCollected = new Set();
     error;
     isCardDisplayStyle = false;
     isGalleryDisplayStyle = false;
@@ -45,44 +46,86 @@ export default class lwcCMSContentByRecord extends LightningElement {
             this.contentArray = data;
             this.content = JSON.stringify(this.contentArray);
 
+            //Logs
+            //console.log("CMS Component Debug || Fetched content successfully");
+            //console.log("CMS Component Debug || Record Id: " + this.recordId);
+            //console.log("CMS Component Debug || Content Type: " + this.contentType);
+            console.log("CMS Component Debug || Content Array: ");
+            console.log(this.content);
+
             //Temporarily hold items
             let itemsToTweak = [];
 
-            //HTML encode the body where necessary
+            //Make desired item tweaks based on config
             for (let item of this.contentArray.items) {
                 
                 //Clone the original item object json
                 let itemToAdd = JSON.parse(JSON.stringify(item));
+
+                //Parse nodes and adjust accordingly
+                for (let [nodeName, node] of Object.entries(itemToAdd.contentNodes)) {
+
+                    //Collect attribute
+                    this.attributesCollected.add(nodeName);
+    
+                    //HTML Decode Rich Text
+                    //console.log("CMS Component Debug || Checking if " + nodeName + " of type " + node.nodeType + " needs to be decoded.");
+                    if (node.nodeType == 'RichText') {
+                        //Encode
+                        node.value = this.htmlDecode(node.value);
+                    }
+
+                    //Adjust image URLs
+                    //console.log("CMS Component Debug || Checking if " + nodeName + " of type " + node.nodeType + " needs to have its URL adjusted.");
+                    if (node.nodeType == 'Media') {
+                        node.url = '/sfsites/c' + node.url;
+                    }
+                }
+
+                //Adjust item based on config
+                let emptyVal = { "value" : "" };
+                let emptyImgVal = { "url": "" }; 
+
+
+                // Set Title --> {item.contentNodes.title.value}
+                if (this.titleAttribute) {
+                    console.log("CMS Component Debug || Mapping title to the CMS attribute " + this.titleAttribute);
+                    itemToAdd.contentNodes.title = itemToAdd["contentNodes"][this.titleAttribute] ? itemToAdd["contentNodes"][this.titleAttribute] : emptyVal;
+                    console.log("CMS Component Debug || Mapped:  ");
+                    console.log(itemToAdd.contentNodes.title);
+                }
+
+                // Set Body --> {item.contentNodes.excerpt.value}
+                if (this.bodyAttribute) {
+                    console.log("CMS Component Debug || Mapping body to the CMS attribute " + this.bodyAttribute);
+                    itemToAdd.contentNodes.excerpt = itemToAdd["contentNodes"][this.bodyAttribute] ? itemToAdd["contentNodes"][this.bodyAttribute] : emptyVal;
+                    console.log("CMS Component Debug || Mapped:  ");
+                    console.log(itemToAdd.contentNodes.excerpt);
+                }
+
+                // Set Image --> {item.contentNodes.bannerImage.url}
+                if (this.imageAttribute) {
+                    console.log("CMS Component Debug || Mapping image to the CMS attribute " + this.imageAttribute);
+                    itemToAdd.contentNodes.bannerImage = itemToAdd["contentNodes"][this.imageAttribute] ? itemToAdd["contentNodes"][this.imageAttribute] : emptyImgVal;
+                    console.log(itemToAdd.contentNodes.bannerImage);
+                }
                 
                 //Logs
-                console.log("CMS Component Debug || Item to add");
-                console.log(itemToAdd);
-
-                //Tweak the specific values necessary to render properly
-                if (itemToAdd.contentNodes.excerpt) {
-                    console.log("CMS Component Debug || HTML: " + this.htmlDecode(itemToAdd.contentNodes.excerpt.value));
-                    itemToAdd.contentNodes.excerpt.value = this.htmlDecode(itemToAdd.contentNodes.excerpt.value);
-                }
-                if (itemToAdd.contentNodes.bannerImage.url) {
-                    itemToAdd.contentNodes.bannerImage.url = '/sfsites/c' + itemToAdd.contentNodes.bannerImage.url;
-                }
+                //console.log("CMS Component Debug || Item to add");
+                //console.log(itemToAdd);
 
                 //Add to array
                 itemsToTweak.push(itemToAdd);
             }
 
+            //Review attributes found
+            console.log("CMS Component Debug || CMS attributes found");
+            console.log(this.attributesCollected);
+
             //Assign items
             this.items = itemsToTweak;
-
-            //Todo
-            //Refactor items array to HTML encode the
-            
-            //Logs
-            console.log("CMS Component Debug || Fetched content successfully");
-            console.log("CMS Component Debug || Record Id: " + this.recordId);
-            console.log("CMS Component Debug || Content Type: " + this.contentType);
-            console.log("CMS Component Debug || Content Array: ");
-            console.log(this.content);
+            console.log("CMS Component Debug || Final updated items:");
+            console.log(this.items);
 
         } else if (error) {
 
