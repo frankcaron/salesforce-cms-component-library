@@ -8,6 +8,7 @@
 */
 
 import { LightningElement, wire, api } from 'lwc';
+import basePath from '@salesforce/community/basePath';
 import getCMSContentForRecordTopics from '@salesforce/apex/ManagedContentController.getCMSContentForRecordTopics';
 
 export default class lwcCMSContentByRecord extends LightningElement {
@@ -110,6 +111,13 @@ export default class lwcCMSContentByRecord extends LightningElement {
                     console.log("CMS Component Debug || Mapping image to the CMS attribute " + this.imageAttribute);
                     itemToAdd.contentNodes.bannerImage = itemToAdd["contentNodes"][this.imageAttribute] ? itemToAdd["contentNodes"][this.imageAttribute] : emptyImgVal;
                     console.log(itemToAdd.contentNodes.bannerImage);
+                }
+
+                // Set URL --> item.contentUrlName
+                if (this.pathAttribute && itemToAdd.contentUrlName) {
+                    console.log("CMS Component Debug || Change URL to add in " + this.pathAttribute);
+                    itemToAdd.contentUrlName = basePath + '/' + this.pathAttribute + '/' + itemToAdd.contentUrlName + '-' + itemToAdd.managedContentId;
+                    console.log(itemToAdd.contentUrlName);
                 }
                 
                 //Logs
