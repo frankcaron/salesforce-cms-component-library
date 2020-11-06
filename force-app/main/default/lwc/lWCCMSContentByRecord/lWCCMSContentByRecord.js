@@ -4,6 +4,7 @@
 - Date
 - Flag
 - Use excerpt instead of the body (by default)
+-- Add restriction to the back-end controller as config property for num results 
 */
 
 import { LightningElement, wire, api } from 'lwc';
