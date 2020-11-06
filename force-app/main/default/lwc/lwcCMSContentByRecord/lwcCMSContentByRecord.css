@@ -70,7 +70,7 @@ div.cms-gallery-block div.cms-card:last-child {
 
 div.cms-gallery-controls {
     text-align: center;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 div.cms-gallery-controls button.slideRight, div.cms-gallery-controls button.slideLeft {

@@ -32,6 +32,10 @@
             </div>
         </template>
         <template if:true={isGalleryDisplayStyle}>
+            <div class="cms-gallery-controls">
+                <button class="slideLeft" type="button" onclick={slideLeft}>&lt;</button>
+                <button class="slideRight" type="button" onclick={slideRight}>&gt;</button>
+            </div>
             <div class="cms-gallery-block">
                 <template if:true={items}>
                     <template for:each={items} for:item="item">
@@ -59,10 +63,6 @@
                         </div>
                     </template>
                 </template>
-            </div>
-            <div class="cms-gallery-controls">
-                <button class="slideLeft" type="button" onclick={slideLeft}>&lt;</button>
-                <button class="slideRight" type="button" onclick={slideRight}>&gt;</button>
             </div>
         </template>
     </template>
