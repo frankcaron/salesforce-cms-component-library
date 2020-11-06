@@ -18,9 +18,11 @@
                                     </p>
                                 </template>
                                     <div class="cms-card-footer">
-                                        <p>Topics:</p>
-                                        <template for:each={item.associations.topics} for:item="topic">
-                                            <p key={topic.id}>{topic.name}</p>
+                                        <template if:true={item.associations}>
+                                            <p>Topics:</p>
+                                            <template for:each={item.associations.topics} for:item="topic">
+                                                <p key={topic.id}>{topic.name}</p>
+                                            </template>
                                         </template>
                                     </div>
                             </lightning-card>
@@ -46,9 +48,11 @@
                                     </p>
                                 </template>
                                     <div class="cms-card-footer">
-                                        <p>Topics:</p>
-                                        <template for:each={item.associations.topics} for:item="topic">
-                                            <p key={topic.id}>{topic.name}</p>
+                                        <template if:true={item.associations}>
+                                            <p>Topics:</p>
+                                            <template for:each={item.associations.topics} for:item="topic">
+                                                <p key={topic.id}>{topic.name}</p>
+                                            </template>
                                         </template>
                                     </div>
                             </lightning-card>
