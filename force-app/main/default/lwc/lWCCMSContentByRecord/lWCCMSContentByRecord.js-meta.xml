@@ -12,6 +12,7 @@
         <targetConfig targets="lightningCommunity__Default">
             <property name="recordId" label="Record Id" type="String" description="The Record ID for loading relevant content based on the component's embdded context." required="true" default="{!recordId}" />
             <property name="contentType" label="Managed Content Type" type="String" description="The type of content to fetch." default="news" />
+            <property name="pathAttribute" label="CMS Page URL Path" type="String" description="If you customized your CMS item detail page, update this value with the exact path. By default, it's the same as the content type." required="true" default="news" />
             <property name="titleAttribute" label="CMS Title Field" type="String" description="The developer name for the CMS Content attribute for the header text." required="true" default="title" />
             <property name="bodyAttribute" label="CMS Body Field" type="String" description="The developer name for the CMS Content attribute for the body text." required="true" default="body" />
             <property name="imageAttribute" label="CMS Image Field" type="String" description="The developer name for the CMS Content attribute for the image location. Must have a property titled 'url' for the media asset." required="true" default="bannerImage" />

@@ -16,6 +16,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @api recordId;
     @api contentType;
     @api inBuilder;
+    @api pathAttribute;
     @api titleAttribute;
     @api bodyAttribute;
     @api imageAttribute;
