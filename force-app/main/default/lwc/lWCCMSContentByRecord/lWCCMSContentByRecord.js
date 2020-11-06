@@ -17,6 +17,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @api recordId;
     @api contentType;
     @api inBuilder;
+    @api numberContentItems;
     @api pathAttribute;
     @api titleAttribute;
     @api bodyAttribute;
@@ -34,7 +35,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     isGalleryDisplayStyle = false;
 
     //Fetch CMS content
-    @wire(getCMSContentForRecordTopics, { recordId: '$recordId', managedContentType: '$contentType' })
+    @wire(getCMSContentForRecordTopics, { recordId: '$recordId', numItems: '$numberContentItems', managedContentType: '$contentType' })
     wiredContent({ error, data }) {
         if (data) {
 

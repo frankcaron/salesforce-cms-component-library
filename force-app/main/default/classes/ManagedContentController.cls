@@ -20,14 +20,14 @@ public with sharing class ManagedContentController {
         List<String> topicIds = new List<String>();
         topicIds.add(topicId);
         
-        return getCMSContentForTopics(topicIds, managedContentType);
+        return getCMSContentForTopics(topicIds, 10, managedContentType);
     }
     
     /**
      * Returns all CMS content for a set of topics in the current community.
      */
     @AuraEnabled(cacheable=true)
-    public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopics(List<String> topicIds, String managedContentType) {
+    public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopics(List<String> topicIds, Integer numItems, String managedContentType) {
         String curLanguage = UserInfo.getLanguage(); // TODO: how does this work for the guest user?
         String communityId = Network.getNetworkId();
         
@@ -41,14 +41,14 @@ public with sharing class ManagedContentController {
             topicNames.add(tpc.Name);
         }
         
-        return ConnectApi.ManagedContent.getManagedContentByTopics(communityId, topicNames, 0, 10, curLanguage, managedContentType); // TODO: Implement pagination, more robust topic name wrapping?
+        return ConnectApi.ManagedContent.getManagedContentByTopics(communityId, topicNames, 0, numItems, curLanguage, managedContentType); // TODO: Implement pagination, more robust topic name wrapping?
     }
     
     /**
      * Returns CMS content related to a record by virtue of topic-for-objects associations.
      */
     @AuraEnabled(cacheable=true)
-    public static ConnectApi.ManagedContentVersionCollection getCMSContentForRecordTopics(String recordId, String managedContentType) {
+    public static ConnectApi.ManagedContentVersionCollection getCMSContentForRecordTopics(String recordId, Integer numItems, String managedContentType) {
         // 1. Retrieve network-scoped topics related to the record.
         String networkId = Network.getNetworkId();
         List<TopicAssignment> assignments = [Select TopicId from TopicAssignment where networkId = :networkId and EntityId = :recordId];
@@ -59,6 +59,6 @@ public with sharing class ManagedContentController {
         }
         
         // 2. Retrieve CMS content tagged with those same topics
-        return getCMSContentForTopics(topicIds, managedContentType);
+        return getCMSContentForTopics(topicIds, numItems, managedContentType);
     }
 }
