@@ -76,9 +76,9 @@ export default class lwcCMSContentByRecord extends LightningElement {
                         node.value = this.htmlDecode(node.value);
                     }
 
-                    //Adjust image URLs
+                    //Adjust image URLs if it's not a fully-qualified URL
                     //console.log("CMS Component Debug || Checking if " + nodeName + " of type " + node.nodeType + " needs to have its URL adjusted.");
-                    if (node.nodeType == 'Media') {
+                    if (node.nodeType == 'Media' && node.url.substring(0, 4) != 'http') {
                         node.url = '/sfsites/c' + node.url;
                     }
                 }
