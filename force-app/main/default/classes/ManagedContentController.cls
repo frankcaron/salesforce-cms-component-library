@@ -33,7 +33,8 @@ public with sharing class ManagedContentController {
         
         List<String> topicIds = new List<String>();
         topicIds.add(topicId);
-        
+
+        System.debug('CMS Component Debug || Added topic to list of topics ' + topicIds + ' for fetch');
         return getCMSContentForTopics(topicIds, numItems, managedContentType);
     }
   
@@ -50,6 +51,8 @@ public with sharing class ManagedContentController {
         for (TopicAssignment assn : assignments) {
             topicIds.add(assn.TopicId);
         }
+
+        System.debug('CMS Component Debug || Added record topic to list of topics ' + topicIds + ' for fetch');
         
         // 2. Retrieve CMS content tagged with those same topics
         return getCMSContentForTopics(topicIds, numItems, managedContentType);

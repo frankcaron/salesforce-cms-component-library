@@ -21,7 +21,9 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @api imageAttribute;
     @api linkAttribute;
     @api contentDisplayStyle;
-    @api topicMode;
+
+    // Params from parent
+    @api topicMode = false;
 
     //Params for content
     content;
@@ -36,7 +38,12 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @wire(getCMSContent, { recordId: '$recordId', numItems: '$numberContentItems', managedContentType: '$contentType', topicMode: '$topicMode' })
     wiredContent({ error, data }) {
         if (data) {
+            
+            //Logs
+            console.log("CMS Component Debug || Grabbed data and beginning to parse");
+
             this.cleanUpForDisplay(data);
+            
         } else if (error) {
 
             //Grab error
