@@ -14,6 +14,9 @@ public with sharing class ManagedContentController {
      */
     @AuraEnabled(cacheable=true)
     public static ConnectApi.ManagedContentVersionCollection getCMSContent(String recordId, String managedContentType, Integer numItems, Boolean topicMode) {
+        
+        System.debug('CMS Component Debug || Topic mode set to ' + topicMode);
+
         if (topicMode) {
             System.debug('CMS Component Debug || Retrieving topic-related CMS content for Community');
             return getCMSContentForTopic(recordId, numItems, managedContentType);

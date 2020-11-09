@@ -1,13 +1,19 @@
 <template>
-    <c-lwc-c-m-s-content-by-record 
-        record-id={topicId} 
-        content-type={contentType}
-        path-attribute={pathAttribute}
-        title-attribute={titleAttribute}
-        body-attribute={bodyAttribute}
-        image-attribute={imageAttribute}
-        link-attribute={linkAttribute}
-        content-display-style={contentDisplayStyle}
-        topic-mode={topicMode}
-    ></c-lwc-c-m-s-content-by-record>
+    <template if:true={topicMode}>
+        <c-lwc-c-m-s-content-by-record 
+            record-id={topicId}
+            content-type={contentType}
+            path-attribute={pathAttribute}
+            title-attribute={titleAttribute}
+            body-attribute={bodyAttribute}
+            image-attribute={imageAttribute}
+            link-attribute={linkAttribute}
+            content-display-style={contentDisplayStyle}
+            topic-mode={topicMode}
+        ></c-lwc-c-m-s-content-by-record>
+        Rendering
+    </template> 
+    <template if:false={topicMode}>
+        Topic mode disabled.
+    </template>
 </template>

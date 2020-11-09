@@ -10,8 +10,8 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
-            <property name="topicId" label="Managed Topic Id" type="String" description="" required="true" default="{!topicId}" />
-            <property name="contentType" label="Managed Content Type" type="String" description="" default="news"/>
+            <property name="topicId" label="Topic Id" type="String" description="The Topic ID for loading relevant content based on the component's embdded context." required="true" default="{!topicId}" />
+            <property name="contentType" label="Managed Content Type" type="String" description="The type of content to fetch." default="news"/>
             <property name="numberContentItems" label="Number of Content Items" type="String" description="The number of content items to return." default="10" />
             <property name="pathAttribute" label="CMS Page URL Path" type="String" description="If you customized your CMS item detail page, update this value with the exact path. By default, it's the same as the content type." required="true" default="news" />
             <property name="titleAttribute" label="CMS Title Field" type="String" description="The developer name for the CMS Content attribute for the header text." required="true" default="title" />

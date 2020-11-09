@@ -13,7 +13,6 @@ export default class lwcCMSContentByTypeAndTopic extends LightningElement {
     @api imageAttribute;
     @api linkAttribute;
     @api contentDisplayStyle;
-    @api topicMode;
 
     //Params for content
     topicMode = true;
