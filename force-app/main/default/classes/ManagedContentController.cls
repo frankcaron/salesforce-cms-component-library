@@ -8,6 +8,18 @@ public with sharing class ManagedContentController {
     public static ConnectApi.ManagedContentChannelCollection getAllAvailableContentChannels() {
         return ConnectApi.ManagedContent.getAllDeliveryChannels(0, 250); // TODO: Make this paginate.
     }
+
+    /**
+     * Returns appropriate content based on the client request
+     */
+    @AuraEnabled(cacheable=true)
+    public static ConnectApi.ManagedContentVersionCollection getCMSContent(String recordId, String managedContentType, Integer numItems, Boolean topicMode) {
+        if (topicMode) {
+            return getCMSContentForTopic(recordId, managedContentType);
+        } else {
+            return getCMSContentForRecordTopics(recordId, numItems, managedContentType);
+        }
+    }
     
     
     /**

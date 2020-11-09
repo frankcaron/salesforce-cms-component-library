@@ -1,15 +1,12 @@
 /* TODO
-- Content item click-through URL
-- Alternative Link
 - Date
-- Flag
-- Use excerpt instead of the body (by default)
--- Add restriction to the back-end controller as config property for num results 
+- Make the second component be built from the first
+- Modify back-end controller to accept a flag to determine which of the pull styles should be used
 */
 
 import { LightningElement, wire, api } from 'lwc';
 import basePath from '@salesforce/community/basePath';
-import getCMSContentForRecordTopics from '@salesforce/apex/ManagedContentController.getCMSContentForRecordTopics';
+import getCMSContent from '@salesforce/apex/ManagedContentController.getCMSContent';
 
 export default class lwcCMSContentByRecord extends LightningElement {
     
@@ -24,6 +21,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @api imageAttribute;
     @api linkAttribute;
     @api contentDisplayStyle;
+    @api topicMode;
 
     //Params for content
     content;
@@ -35,109 +33,10 @@ export default class lwcCMSContentByRecord extends LightningElement {
     isGalleryDisplayStyle = false;
 
     //Fetch CMS content
-    @wire(getCMSContentForRecordTopics, { recordId: '$recordId', numItems: '$numberContentItems', managedContentType: '$contentType' })
+    @wire(getCMSContent, { recordId: '$recordId', numItems: '$numberContentItems', managedContentType: '$contentType', topicMode: '$topicMode' })
     wiredContent({ error, data }) {
         if (data) {
-
-            //Determine display style
-            if (this.contentDisplayStyle == 'Cards') {
-                this.isCardDisplayStyle = true;
-            } else {
-                this.isGalleryDisplayStyle = true;
-            }
-
-            //Grab data
-            this.contentArray = data;
-            this.content = JSON.stringify(this.contentArray);
-
-            //Logs
-            //console.log("CMS Component Debug || Fetched content successfully");
-            //console.log("CMS Component Debug || Record Id: " + this.recordId);
-            //console.log("CMS Component Debug || Content Type: " + this.contentType);
-            console.log("CMS Component Debug || Content Array: ");
-            console.log(this.content);
-
-            //Temporarily hold items
-            let itemsToTweak = [];
-
-            //Make desired item tweaks based on config
-            for (let item of this.contentArray.items) {
-                
-                //Clone the original item object json
-                let itemToAdd = JSON.parse(JSON.stringify(item));
-
-                //Parse nodes and adjust accordingly
-                for (let [nodeName, node] of Object.entries(itemToAdd.contentNodes)) {
-
-                    //Collect attribute
-                    this.attributesCollected.add(nodeName);
-    
-                    //HTML Decode Rich Text
-                    //console.log("CMS Component Debug || Checking if " + nodeName + " of type " + node.nodeType + " needs to be decoded.");
-                    if (node.nodeType == 'RichText') {
-                        //Encode
-                        node.value = this.htmlDecode(node.value);
-                    }
-
-                    //Adjust image URLs if it's not a fully-qualified URL
-                    //console.log("CMS Component Debug || Checking if " + nodeName + " of type " + node.nodeType + " needs to have its URL adjusted.");
-                    if (node.nodeType == 'Media' && node.url.substring(0, 4) != 'http') {
-                        node.url = '/sfsites/c' + node.url;
-                    }
-                }
-
-                //Adjust item based on config
-                let emptyVal = { "value" : "" };
-                let emptyImgVal = { "url": "" }; 
-
-
-                // Set Title --> {item.contentNodes.title.value}
-                if (this.titleAttribute) {
-                    console.log("CMS Component Debug || Mapping title to the CMS attribute " + this.titleAttribute);
-                    itemToAdd.contentNodes.title = itemToAdd["contentNodes"][this.titleAttribute] ? itemToAdd["contentNodes"][this.titleAttribute] : emptyVal;
-                    console.log("CMS Component Debug || Mapped:  ");
-                    console.log(itemToAdd.contentNodes.title);
-                }
-
-                // Set Body --> {item.contentNodes.excerpt.value}
-                if (this.bodyAttribute) {
-                    console.log("CMS Component Debug || Mapping body to the CMS attribute " + this.bodyAttribute);
-                    itemToAdd.contentNodes.excerpt = itemToAdd["contentNodes"][this.bodyAttribute] ? itemToAdd["contentNodes"][this.bodyAttribute] : emptyVal;
-                    console.log("CMS Component Debug || Mapped:  ");
-                    console.log(itemToAdd.contentNodes.excerpt);
-                }
-
-                // Set Image --> {item.contentNodes.bannerImage.url}
-                if (this.imageAttribute) {
-                    console.log("CMS Component Debug || Mapping image to the CMS attribute " + this.imageAttribute);
-                    itemToAdd.contentNodes.bannerImage = itemToAdd["contentNodes"][this.imageAttribute] ? itemToAdd["contentNodes"][this.imageAttribute] : emptyImgVal;
-                    console.log(itemToAdd.contentNodes.bannerImage);
-                }
-
-                // Set URL --> item.contentUrlName
-                if (this.pathAttribute && itemToAdd.contentUrlName) {
-                    console.log("CMS Component Debug || Change URL to add in " + this.pathAttribute);
-                    itemToAdd.contentUrlName = basePath + '/' + this.pathAttribute + '/' + itemToAdd.contentUrlName + '-' + itemToAdd.managedContentId;
-                    console.log(itemToAdd.contentUrlName);
-                }
-                
-                //Logs
-                //console.log("CMS Component Debug || Item to add");
-                //console.log(itemToAdd);
-
-                //Add to array
-                itemsToTweak.push(itemToAdd);
-            }
-
-            //Review attributes found
-            console.log("CMS Component Debug || CMS attributes found");
-            console.log(this.attributesCollected);
-
-            //Assign items
-            this.items = itemsToTweak;
-            console.log("CMS Component Debug || Final updated items:");
-            console.log(this.items);
-
+            this.cleanUpForDisplay(data);
         } else if (error) {
 
             //Grab error
@@ -154,6 +53,108 @@ export default class lwcCMSContentByRecord extends LightningElement {
             console.log("CMS Component Debug || Error" + error);
 
         }
+    }
+
+    //Private function to do all the data massaging 
+    cleanUpForDisplay(data) {
+        //Determine display style
+        if (this.contentDisplayStyle == 'Cards') {
+            this.isCardDisplayStyle = true;
+        } else {
+            this.isGalleryDisplayStyle = true;
+        }
+
+        //Grab data
+        this.contentArray = data;
+        this.content = JSON.stringify(this.contentArray);
+
+        //Logs
+        //console.log("CMS Component Debug || Fetched content successfully");
+        //console.log("CMS Component Debug || Record Id: " + this.recordId);
+        //console.log("CMS Component Debug || Content Type: " + this.contentType);
+        console.log("CMS Component Debug || Content Array: ");
+        console.log(this.content);
+
+        //Temporarily hold items
+        let itemsToTweak = [];
+
+        //Make desired item tweaks based on config
+        for (let item of this.contentArray.items) {
+            
+            //Clone the original item object json
+            let itemToAdd = JSON.parse(JSON.stringify(item));
+
+            //Parse nodes and adjust accordingly
+            for (let [nodeName, node] of Object.entries(itemToAdd.contentNodes)) {
+
+                //Collect attribute
+                this.attributesCollected.add(nodeName);
+
+                //HTML Decode Rich Text
+                //console.log("CMS Component Debug || Checking if " + nodeName + " of type " + node.nodeType + " needs to be decoded.");
+                if (node.nodeType == 'RichText') {
+                    //Encode
+                    node.value = this.htmlDecode(node.value);
+                }
+
+                //Adjust image URLs if it's not a fully-qualified URL
+                //console.log("CMS Component Debug || Checking if " + nodeName + " of type " + node.nodeType + " needs to have its URL adjusted.");
+                if (node.nodeType == 'Media' && node.url.substring(0, 4) != 'http') {
+                    node.url = '/sfsites/c' + node.url;
+                }
+            }
+
+            //Adjust item based on config
+            let emptyVal = { "value" : "" };
+            let emptyImgVal = { "url": "" }; 
+
+
+            // Set Title --> {item.contentNodes.title.value}
+            if (this.titleAttribute) {
+                console.log("CMS Component Debug || Mapping title to the CMS attribute " + this.titleAttribute);
+                itemToAdd.contentNodes.title = itemToAdd["contentNodes"][this.titleAttribute] ? itemToAdd["contentNodes"][this.titleAttribute] : emptyVal;
+                console.log("CMS Component Debug || Mapped:  ");
+                console.log(itemToAdd.contentNodes.title);
+            }
+
+            // Set Body --> {item.contentNodes.excerpt.value}
+            if (this.bodyAttribute) {
+                console.log("CMS Component Debug || Mapping body to the CMS attribute " + this.bodyAttribute);
+                itemToAdd.contentNodes.excerpt = itemToAdd["contentNodes"][this.bodyAttribute] ? itemToAdd["contentNodes"][this.bodyAttribute] : emptyVal;
+                console.log("CMS Component Debug || Mapped:  ");
+                console.log(itemToAdd.contentNodes.excerpt);
+            }
+
+            // Set Image --> {item.contentNodes.bannerImage.url}
+            if (this.imageAttribute) {
+                console.log("CMS Component Debug || Mapping image to the CMS attribute " + this.imageAttribute);
+                itemToAdd.contentNodes.bannerImage = itemToAdd["contentNodes"][this.imageAttribute] ? itemToAdd["contentNodes"][this.imageAttribute] : emptyImgVal;
+                console.log(itemToAdd.contentNodes.bannerImage);
+            }
+
+            // Set URL --> item.contentUrlName
+            if (this.pathAttribute && itemToAdd.contentUrlName) {
+                console.log("CMS Component Debug || Change URL to add in " + this.pathAttribute);
+                itemToAdd.contentUrlName = basePath + '/' + this.pathAttribute + '/' + itemToAdd.contentUrlName + '-' + itemToAdd.managedContentId;
+                console.log(itemToAdd.contentUrlName);
+            }
+            
+            //Logs
+            //console.log("CMS Component Debug || Item to add");
+            //console.log(itemToAdd);
+
+            //Add to array
+            itemsToTweak.push(itemToAdd);
+        }
+
+        //Review attributes found
+        console.log("CMS Component Debug || CMS attributes found");
+        console.log(this.attributesCollected);
+
+        //Assign items
+        this.items = itemsToTweak;
+        console.log("CMS Component Debug || Final updated items:");
+        console.log(this.items);
     }
 
     //Private function to decode HTML

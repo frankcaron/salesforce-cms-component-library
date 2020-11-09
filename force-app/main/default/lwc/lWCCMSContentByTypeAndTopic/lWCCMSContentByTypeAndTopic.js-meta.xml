@@ -12,6 +12,13 @@
         <targetConfig targets="lightningCommunity__Default">
             <property name="topicId" label="Managed Topic Id" type="String" description="" required="true" default="{!topicId}" />
             <property name="contentType" label="Managed Content Type" type="String" description="" default="news"/>
+            <property name="numberContentItems" label="Number of Content Items" type="String" description="The number of content items to return." default="10" />
+            <property name="pathAttribute" label="CMS Page URL Path" type="String" description="If you customized your CMS item detail page, update this value with the exact path. By default, it's the same as the content type." required="true" default="news" />
+            <property name="titleAttribute" label="CMS Title Field" type="String" description="The developer name for the CMS Content attribute for the header text." required="true" default="title" />
+            <property name="bodyAttribute" label="CMS Body Field" type="String" description="The developer name for the CMS Content attribute for the body text." required="true" default="body" />
+            <property name="imageAttribute" label="CMS Image Field" type="String" description="The developer name for the CMS Content attribute for the image location. Must have a property titled 'url' for the media asset." required="true" default="bannerImage" />
+            <property name="linkAttribute" label="CMS Content URL" type="String" description="The developer name for the CMS Content attribute for the content URL" required="true" default="unauthenticatedUrl" />
+            <property name="contentDisplayStyle" label="Visual Style" type="String" description="The display style. Pick 'Cards' or 'Gallery'." required="true" default="Cards" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

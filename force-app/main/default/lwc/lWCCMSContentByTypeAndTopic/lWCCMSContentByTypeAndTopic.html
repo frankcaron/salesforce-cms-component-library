@@ -1,23 +1,13 @@
 <template>
-    <div class="cms-content-block">
-        <h2>Properties</h2>
-        <p>Record: {topicId}</p>
-        <p>Content Type: {contentType}</p>
-    </div>
-
-    <template if:true={content}>
-        <div class="cms-content-block">
-            <h2>Raw Content</h2>
-            <p>{content}</p>
-        </div>
-        <div class="cms-content-block">
-            <h2>Pretty Content</h2>
-        </div>
-    </template>
-    <template if:true={error}>
-        <div>
-            <p>{error}</p>
-        </div>
-    </template>
-
+    <c-lwc-c-m-s-content-by-record 
+        record-id={topicId} 
+        content-type={contentType}
+        path-attribute={pathAttribute}
+        title-attribute={titleAttribute}
+        body-attribute={bodyAttribute}
+        image-attribute={imageAttribute}
+        link-attribute={linkAttribute}
+        content-display-style={contentDisplayStyle}
+        topic-mode={topicMode}
+    ></c-lwc-c-m-s-content-by-record>
 </template>

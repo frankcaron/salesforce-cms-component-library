@@ -19,6 +19,7 @@
             <property name="imageAttribute" label="CMS Image Field" type="String" description="The developer name for the CMS Content attribute for the image location. Must have a property titled 'url' for the media asset." required="true" default="bannerImage" />
             <property name="linkAttribute" label="CMS Content URL" type="String" description="The developer name for the CMS Content attribute for the content URL" required="true" default="unauthenticatedUrl" />
             <property name="contentDisplayStyle" label="Visual Style" type="String" description="The display style. Pick 'Cards' or 'Gallery'." required="true" default="Cards" />
+            <property name="topicMode" label="Topic Mode" type="Boolean" description="Determines if the component returns CMS content associated with a record or a topic" required="true" default="false" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
