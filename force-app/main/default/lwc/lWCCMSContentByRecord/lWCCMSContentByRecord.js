@@ -1,19 +1,12 @@
-/* TODO
-- Date
-- Make the second component be built from the first
-- Modify back-end controller to accept a flag to determine which of the pull styles should be used
-*/
-
 import { LightningElement, wire, api } from 'lwc';
 import basePath from '@salesforce/community/basePath';
 import getCMSContent from '@salesforce/apex/ManagedContentController.getCMSContent';
 
 export default class lwcCMSContentByRecord extends LightningElement {
-    
+
     // Params from config
     @api recordId;
     @api contentType;
-    @api inBuilder;
     @api numberContentItems;
     @api pathAttribute;
     @api titleAttribute;
@@ -25,7 +18,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     // Params from parent
     @api topicMode = false;
 
-    //Params for content
+    //Params for content manipulation
     content;
     contentArray;
     items;
@@ -38,12 +31,12 @@ export default class lwcCMSContentByRecord extends LightningElement {
     @wire(getCMSContent, { recordId: '$recordId', numItems: '$numberContentItems', managedContentType: '$contentType', singleTopicMode: '$topicMode' })
     wiredContent({ error, data }) {
         if (data) {
-            
+
             //Logs
             console.log("CMS Component Debug || Grabbed data and beginning to parse");
 
             this.cleanUpForDisplay(data);
-            
+
         } else if (error) {
 
             //Grab error
@@ -62,7 +55,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
         }
     }
 
-    //Private function to do all the data massaging 
+    //Private function to do all the data massaging
     cleanUpForDisplay(data) {
         //Determine display style
         if (this.contentDisplayStyle == 'Grid') {
@@ -87,7 +80,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
 
         //Make desired item tweaks based on config
         for (let item of this.contentArray.items) {
-            
+
             //Clone the original item object json
             let itemToAdd = JSON.parse(JSON.stringify(item));
 
@@ -113,7 +106,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
 
             //Adjust item based on config
             let emptyVal = { "value" : "" };
-            let emptyImgVal = { "url": "" }; 
+            let emptyImgVal = { "url": "" };
 
 
             // Set Title --> {item.contentNodes.title.value}
@@ -145,7 +138,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
                 itemToAdd.contentUrlName = basePath + '/' + this.pathAttribute + '/' + itemToAdd.contentUrlName + '-' + itemToAdd.managedContentId;
                 console.log(itemToAdd.contentUrlName);
             }
-            
+
             //Logs
             //console.log("CMS Component Debug || Item to add");
             //console.log(itemToAdd);
@@ -170,7 +163,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
         return doc.documentElement.textContent;
     }
 
-    //Private function to set up scrolling for the gallery view
+    //Private functions to set up scrolling for the gallery view
     slideRight() {
         let currentAmount = this.template.querySelector('.cms-gallery-block').scrollLeft;
         let cardWidth = this.template.querySelector('.cms-gallery-block').scrollWidth;
@@ -186,17 +179,17 @@ export default class lwcCMSContentByRecord extends LightningElement {
         let moveToVal = currentAmount - (cardWidth / cardCount);
         console.log("CMS Component Debug || Looking at moving across " + cardCount + " cards with a total width of " + cardWidth) ;
         this.slide(moveToVal);
-        
+
     }
     slide(val) {
         let currentAmount = this.template.querySelector('.cms-gallery-block').scrollLeft;
         console.log("CMS Component Debug || Scrolling to: " + val + " from " + currentAmount);
-        
+
         this.template.querySelector('.cms-gallery-block').scrollLeft = val;
         /* this.template.querySelector('.cms-gallery-block').animate([
-            { scrollLeft: currentAmount }, 
+            { scrollLeft: currentAmount },
             { scrollLeft: val }
-          ], { 
+          ], {
             // timing options
             duration: 0,
             iterations: 2
