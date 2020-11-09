@@ -65,7 +65,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     //Private function to do all the data massaging 
     cleanUpForDisplay(data) {
         //Determine display style
-        if (this.contentDisplayStyle == 'Cards') {
+        if (this.contentDisplayStyle == 'Carousel') {
             this.isCardDisplayStyle = true;
         } else {
             this.isGalleryDisplayStyle = true;
