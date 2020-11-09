@@ -10,15 +10,15 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
-            <property name="topicId" label="Topic Id" type="String" description="The Topic ID for loading relevant content based on the component's embdded context." required="true" default="{!topicId}" />
-            <property name="contentType" label="Managed Content Type" type="String" description="The type of content to fetch." default="news"/>
-            <property name="numberContentItems" label="Number of Content Items" type="String" description="The number of content items to return." default="10" />
+            <property name="topicId" label="Topic Id" type="String" description="The Salesforce Id of the topic to display CMS content for." required="true" default="{!recordId}" />
+            <property name="contentType" label="Managed Content Type" type="String" description="The developer name of the CMS Content Type of content to fetch." default="news" />
+            <property name="numberContentItems" label="Number of Content Items" type="Integer" min="1" max="30" description="The maximum number of CMS content items to return." default="10" />
+            <property name="contentDisplayStyle" label="Collection Layout" type="String" description="The display style. Pick 'Grid' for multiple items displayed at once, or 'Carousel' for a click-through slider of multiple items." required="true" datasource="Carousel,Grid" default="Carousel" />       
             <property name="pathAttribute" label="CMS Page URL Path" type="String" description="If you customized your CMS item detail page, update this value with the exact path. By default, it's the same as the content type." required="true" default="news" />
             <property name="titleAttribute" label="CMS Title Field" type="String" description="The developer name for the CMS Content attribute for the header text." required="true" default="title" />
             <property name="bodyAttribute" label="CMS Body Field" type="String" description="The developer name for the CMS Content attribute for the body text." required="true" default="body" />
-            <property name="imageAttribute" label="CMS Image Field" type="String" description="The developer name for the CMS Content attribute for the image location. Must have a property titled 'url' for the media asset." required="true" default="bannerImage" />
-            <property name="linkAttribute" label="CMS Content URL" type="String" description="The developer name for the CMS Content attribute for the content URL" required="true" default="unauthenticatedUrl" />
-            <property name="contentDisplayStyle" label="Visual Style" type="String" description="The display style. Pick 'Cards' or 'Gallery'." required="true" default="Cards" />
+            <property name="imageAttribute" label="CMS Image Field" type="String" description="The developer name for the CMS Content attribute for the image displayed. This MUST be a field/node of type Image." required="true" default="bannerImage" />
+            <property name="linkAttribute" label="CMS Content URL" type="String" description="The developer name for the CMS Content attribute for the content URL" required="true" default="unauthenticatedUrl" />  
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
