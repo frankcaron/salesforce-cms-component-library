@@ -15,8 +15,10 @@ public with sharing class ManagedContentController {
     @AuraEnabled(cacheable=true)
     public static ConnectApi.ManagedContentVersionCollection getCMSContent(String recordId, String managedContentType, Integer numItems, Boolean topicMode) {
         if (topicMode) {
-            return getCMSContentForTopic(recordId, managedContentType);
+            System.debug('CMS Component Debug || Retrieving topic-related CMS content for Community');
+            return getCMSContentForTopic(recordId, numItems, managedContentType);
         } else {
+            System.debug('CMS Component Debug || Retrieving record-related CMS content for Community');
             return getCMSContentForRecordTopics(recordId, numItems, managedContentType);
         }
     }
@@ -26,36 +28,15 @@ public with sharing class ManagedContentController {
      * Returns all content for a particular topic in the current community.
      */
     @AuraEnabled(cacheable=true)
-    public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopic(String topicId, String managedContentType) {
+    public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopic(String topicId, Integer numItems, String managedContentType) {
         String communityId = Network.getNetworkId();
         
         List<String> topicIds = new List<String>();
         topicIds.add(topicId);
         
-        return getCMSContentForTopics(topicIds, 10, managedContentType);
+        return getCMSContentForTopics(topicIds, numItems, managedContentType);
     }
-    
-    /**
-     * Returns all CMS content for a set of topics in the current community.
-     */
-    @AuraEnabled(cacheable=true)
-    public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopics(List<String> topicIds, Integer numItems, String managedContentType) {
-        String curLanguage = UserInfo.getLanguage(); // TODO: how does this work for the guest user?
-        String communityId = Network.getNetworkId();
-        
-        System.debug('Retrieving CMS Content for Community ' + communityId);
-        
-        // convert topic IDs to names to work with the API
-        List<Topic> topics = [select Name from Topic where Id in :topicIds and networkId = :communityId];
-        List<String> topicNames = new List<String>();
-        for (Topic tpc : topics) {
-            System.debug('Adding topic ' + tpc.Name + ' to CMS lookup list.');
-            topicNames.add(tpc.Name);
-        }
-        
-        return ConnectApi.ManagedContent.getManagedContentByTopics(communityId, topicNames, 0, numItems, curLanguage, managedContentType); // TODO: Implement pagination, more robust topic name wrapping?
-    }
-    
+  
     /**
      * Returns CMS content related to a record by virtue of topic-for-objects associations.
      */
@@ -72,5 +53,26 @@ public with sharing class ManagedContentController {
         
         // 2. Retrieve CMS content tagged with those same topics
         return getCMSContentForTopics(topicIds, numItems, managedContentType);
+    }
+
+    /**
+     * Returns all CMS content for a set of topics in the current community.
+     */
+    @AuraEnabled(cacheable=true)
+    public static ConnectApi.ManagedContentVersionCollection getCMSContentForTopics(List<String> topicIds, Integer numItems, String managedContentType) {
+        String curLanguage = UserInfo.getLanguage(); // TODO: how does this work for the guest user?
+        String communityId = Network.getNetworkId();
+        
+        System.debug('CMS Component Debug || Retrieving CMS Content for Community ' + communityId);
+        
+        // convert topic IDs to names to work with the API
+        List<Topic> topics = [select Name from Topic where Id in :topicIds and networkId = :communityId];
+        List<String> topicNames = new List<String>();
+        for (Topic tpc : topics) {
+            System.debug('CMS Component Debug || Adding topic ' + tpc.Name + ' to CMS lookup list.');
+            topicNames.add(tpc.Name);
+        }
+        
+        return ConnectApi.ManagedContent.getManagedContentByTopics(communityId, topicNames, 0, numItems, curLanguage, managedContentType); // TODO: Implement pagination, more robust topic name wrapping?
     }
 }
