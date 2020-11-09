@@ -35,7 +35,7 @@ export default class lwcCMSContentByRecord extends LightningElement {
     isGalleryDisplayStyle = false;
 
     //Fetch CMS content
-    @wire(getCMSContent, { recordId: '$recordId', numItems: '$numberContentItems', managedContentType: '$contentType', topicMode: '$topicMode' })
+    @wire(getCMSContent, { recordId: '$recordId', numItems: '$numberContentItems', managedContentType: '$contentType', singleTopicMode: '$topicMode' })
     wiredContent({ error, data }) {
         if (data) {
             

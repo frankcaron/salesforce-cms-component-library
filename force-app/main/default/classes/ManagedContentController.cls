@@ -11,17 +11,19 @@ public with sharing class ManagedContentController {
 
     /**
      * Returns appropriate content based on the client request
+     * Single Topic Mode is used to only fetch CMS content records tagged with the specific 
+     * topic ID 
      */
     @AuraEnabled(cacheable=true)
-    public static ConnectApi.ManagedContentVersionCollection getCMSContent(String recordId, String managedContentType, Integer numItems, Boolean topicMode) {
+    public static ConnectApi.ManagedContentVersionCollection getCMSContent(String recordId, String managedContentType, Integer numItems, Boolean singleTopicMode) {
         
-        System.debug('CMS Component Debug || Topic mode set to ' + topicMode);
+        System.debug('CMS Component Debug || Topic mode set to ' + singleTopicMode);
 
-        if (topicMode) {
-            System.debug('CMS Component Debug || Retrieving topic-related CMS content for Community');
+        if (singleTopicMode) {
+            System.debug('CMS Component Debug || Retrieving topic-related CMS content for one topic');
             return getCMSContentForTopic(recordId, numItems, managedContentType);
         } else {
-            System.debug('CMS Component Debug || Retrieving record-related CMS content for Community');
+            System.debug('CMS Component Debug || Retrieving record-related CMS content for Community by topics');
             return getCMSContentForRecordTopics(recordId, numItems, managedContentType);
         }
     }
