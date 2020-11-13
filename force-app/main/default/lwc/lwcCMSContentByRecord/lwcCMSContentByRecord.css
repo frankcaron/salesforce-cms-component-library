@@ -84,25 +84,27 @@ div.cms-gallery-controls {
 
 div.cms-gallery-controls button.slideRight {
     position: absolute;
-    top: 10px;
+    top: 15vh;
     right: 0;
     z-index: 10;
 }
 
 div.cms-gallery-controls button.slideLeft{
     position: absolute;
-    top: 10px;
-    right: 45px;
+    top: 15vh;
+    left: 0;
     z-index: 10;
 }
 
 div.cms-gallery-controls button.slideRight, div.cms-gallery-controls button.slideLeft {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding-left: 10px;
-    width: 40px;
+    width: 30px;
     padding-right: 10px;
-    background-color: rgb(240,240,240,1);
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: rgb(240,240,240,0.9);
     border: none;
     border-radius: 10px;
     font-size: 15px;
