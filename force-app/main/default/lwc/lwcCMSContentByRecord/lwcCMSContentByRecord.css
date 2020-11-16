@@ -7,6 +7,10 @@ div.cms-content-block {
     margin-bottom: 10px;
 }
 
+div.my-new-class-rent-too-high {
+    margin-left: 10px;
+}
+
 /* CMS Card Body */
 div.cms-content-block div.cms-card {
     margin-bottom: 20px;
