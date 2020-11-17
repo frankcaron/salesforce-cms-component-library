@@ -38,6 +38,7 @@ private class ManagedContentControllerTests {
         // BEGIN TESTS
         
         // test CMS content retrieval for a topic
+        // NOTE: Channel access currently prevents a meaningful test of CMS content. This code is to achieve test coverage only.
         try {
             ManagedContentController.getCMSContent(testTopicId, cmsNewsContentTypeDevName, 10, true);
         } catch (Exception e) {
@@ -45,13 +46,12 @@ private class ManagedContentControllerTests {
         }
 
         // test CMS content retrieval for a record tagged with topics
+        // NOTE: Channel access currently prevents a meaningful test of CMS content. This code is to achieve test coverage only.
         String recordId = '';
         try {
             ManagedContentController.getCMSContent(recordId, cmsNewsContentTypeDevName, 10, false);
         } catch (Exception e) {
             System.debug(e);
         }
-        // 1. Find records tagged with topics that match the topics on CMS content
-
     } 
 }
