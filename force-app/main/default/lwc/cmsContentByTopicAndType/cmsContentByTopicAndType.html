@@ -1,6 +1,6 @@
 <template>
     <template if:true={topicMode}>
-        <c-lwc-c-m-s-content-by-record 
+        <c-cms-content-by-record-and-type
             record-id={topicId}
             content-type={contentType}
             number-content-items={numberContentItems}
@@ -11,8 +11,8 @@
             link-attribute={linkAttribute}
             content-display-style={contentDisplayStyle}
             topic-mode={topicMode}
-        ></c-lwc-c-m-s-content-by-record>
-    </template> 
+        ></c-cms-content-by-record-and-type>
+    </template>
     <template if:false={topicMode}>
         Topic mode disabled.
     </template>

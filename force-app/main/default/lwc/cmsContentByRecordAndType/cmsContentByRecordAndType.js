@@ -2,7 +2,7 @@ import { LightningElement, wire, api } from 'lwc';
 import basePath from '@salesforce/community/basePath';
 import getCMSContent from '@salesforce/apex/ManagedContentController.getCMSContent';
 
-export default class lwcCMSContentByRecord extends LightningElement {
+export default class cmsContentByRecordAndType extends LightningElement {
 
     // Params from config
     @api recordId;

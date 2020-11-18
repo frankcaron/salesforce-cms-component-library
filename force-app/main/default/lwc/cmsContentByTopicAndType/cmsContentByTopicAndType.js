@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
-export default class lwcCMSContentByTypeAndTopic extends LightningElement {
-    
+export default class cmsContentByTopicAndType extends LightningElement {
+
     // Params from config
     @api topicId;
     @api contentType;
